@@ -13,6 +13,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,18 +22,22 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oishikenko.android.recruitment.feature.R
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalLifecycleComposeApi::class)
+
 @Composable
-fun RecipeListScreen(
+fun RecipePageScreen() {
+    ListScreen()
+    HeaderScreen()
+}
+
+@OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalLayoutApi::class)
+@Composable
+fun ListScreen(
     viewModel: RecipeListViewModel = hiltViewModel()
 ) {
     val cookingRecords by viewModel.cookingRecords.collectAsStateWithLifecycle()
     Scaffold(
         topBar = {
-            TopAppBar(
-                modifier = Modifier,
-            ) {
-                Text(text = stringResource(id = R.string.cooking_records_title))
-            }
+            HeaderScreen()
         }
     ) { innerPadding ->
         LazyColumn(
@@ -48,10 +53,20 @@ fun RecipeListScreen(
     }
 }
 
+@Composable
+fun HeaderScreen() {
+    TopAppBar(
+        modifier = Modifier,
+        backgroundColor = Color.White
+    ) {
+        Text(text = stringResource(id = R.string.cooking_records_title))
+    }
+}
+
 @Preview
 @Composable
-fun PreviewRecipeListScreen(){
+fun PreviewRecipeListScreen() {
     MaterialTheme {
-        RecipeListScreen()
+        ListScreen()
     }
 }
