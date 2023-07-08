@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +35,16 @@ fun RecipeListItem(
                 .size(96.dp)
                 .clip(RoundedCornerShape(4.dp)),
         )
+        Text(text = generateDateText(cookingRecord.recordedAt))
     }
+}
+
+fun generateDateText(recordedAt: String): String {
+    val year = recordedAt.substring(0, 4)
+    val month = recordedAt.substring(5, 7)
+    val date = recordedAt.substring(8, 10)
+    val time = recordedAt.substring(11, 16)
+    return "$year/$month/$date $time"
 }
 
 @Preview
@@ -42,7 +52,7 @@ fun RecipeListItem(
 fun PreviewRecipeListItem() {
     RecipeListItem(
         cookingRecord = CookingRecord(
-            imageUrl= "",
+            imageUrl = "",
             comment = "豚肉のコクとごぼうの香り、野菜の甘みで奥行きのある味わい。",
             recipeType = "soup",
             recordedAt = "2018-05-01 17:57:31"
