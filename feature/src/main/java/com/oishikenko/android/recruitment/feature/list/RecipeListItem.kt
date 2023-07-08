@@ -35,7 +35,16 @@ fun RecipeListItem(
                 .size(96.dp)
                 .clip(RoundedCornerShape(4.dp)),
         )
+        Text(text = translateRecipeType(cookingRecord.recipeType))
         Text(text = generateDateText(cookingRecord.recordedAt))
+    }
+}
+
+fun translateRecipeType(recipeType: String): String {
+    return when (recipeType) {
+        "main_dish" -> "主菜/主食"
+        "side_dish" -> "副菜"
+        else -> "スープ"
     }
 }
 
