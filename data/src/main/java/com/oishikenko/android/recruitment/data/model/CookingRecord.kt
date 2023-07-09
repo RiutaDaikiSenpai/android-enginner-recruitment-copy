@@ -2,7 +2,10 @@ package com.oishikenko.android.recruitment.data.model
 
 
 import com.squareup.moshi.Json
+import kotlinx.serialization.Serializable
 
+
+@Serializable
 data class CookingRecord(
     @Json(name = "comment")
     val comment: String,
