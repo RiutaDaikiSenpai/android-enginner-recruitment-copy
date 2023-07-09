@@ -53,7 +53,6 @@ fun ListScreen(
     }
 }
 
-
 @Composable
 fun HeaderScreen() {
     val appBarHorizontalPadding = 4.dp
@@ -68,7 +67,6 @@ fun HeaderScreen() {
     ) {
         val imageModifier = Modifier
             .size(60.dp)
-
         val textModifier = Modifier
             .padding(0.dp, 0.dp, 10.dp, 0.dp)
 
@@ -77,7 +75,6 @@ fun HeaderScreen() {
                 .height(64.dp)
                 .fillMaxSize()
         ) {
-
             Row(
                 Modifier
                     .fillMaxSize()
