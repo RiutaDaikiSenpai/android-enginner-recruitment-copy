@@ -1,6 +1,6 @@
 package com.oishikenko.android.recruitment.feature.list
 
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,7 +15,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -32,16 +31,18 @@ import com.oishikenko.android.recruitment.feature.R
 @Composable
 fun RecipePageScreen() {
     val navController = rememberAnimatedNavController()
-    AnimatedNavHost(navController = navController, startDestination = "recipeList") {
+    AnimatedNavHost(
+        navController = navController, startDestination = "recipeList"
+    ) {
 
-        composable(route = "recipeList") {
+        composable(
+            route = "recipeList",
+        ) {
             HeaderScreen()
             ListScreen(navController = navController)
         }
         composable(route = "recipeDetail") {
-            RecipeDetail(4) {
-                //詳細画面にCookingRecordsを渡す
-            }
+            RecipeDetail()
         }
     }
 }
@@ -66,7 +67,6 @@ fun ListScreen(
         ) {
             items(cookingRecords) {
                 RecipeListItem(it) { i ->
-                    //ラムダによってここでnavigate出来ないのだろうか。index
                     navController.navigate(i)
                 }
             }
@@ -109,7 +109,8 @@ fun HeaderScreen() {
                     text = stringResource(id = R.string.cooking_records_title),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = textModifier
+                    modifier = textModifier,
+                    color = Color.Black
                 )
                 Image(
                     painter = painterResource(id = R.drawable.group),

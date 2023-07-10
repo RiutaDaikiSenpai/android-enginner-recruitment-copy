@@ -35,7 +35,6 @@ fun RecipeListItem(
                     color = Color(0xFFDCE0E0),
                     shape = RoundedCornerShape(8.dp)
                 )
-                .background(Color(0xFFDCE0E0))
         ) {
             AsyncImage(
                 model = cookingRecord.imageUrl,
