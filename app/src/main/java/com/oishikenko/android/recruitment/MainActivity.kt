@@ -7,6 +7,7 @@ import com.oishikenko.android.recruitment.feature.list.RecipePageScreen
 import com.oishikenko.android.recruitment.ui.theme.RecruitmentTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

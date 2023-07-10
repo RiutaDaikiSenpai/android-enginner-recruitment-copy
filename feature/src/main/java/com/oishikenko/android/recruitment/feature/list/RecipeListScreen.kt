@@ -1,5 +1,6 @@
 package com.oishikenko.android.recruitment.feature.list
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,19 +21,36 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.oishikenko.android.recruitment.feature.R
 
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun RecipePageScreen() {
-    ListScreen()
-    HeaderScreen()
+    val navController = rememberAnimatedNavController()
+    AnimatedNavHost(navController = navController, startDestination = "recipeList") {
+
+        composable(route = "recipeList") {
+            HeaderScreen()
+            ListScreen(navController = navController)
+        }
+        composable(route = "recipeDetail") {
+            RecipeDetail(4) {
+                //詳細画面にCookingRecordsを渡す
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun ListScreen(
-    viewModel: RecipeListViewModel = hiltViewModel()
+    viewModel: RecipeListViewModel = hiltViewModel(),
+    navController: NavHostController
 ) {
     val cookingRecords by viewModel.cookingRecords.collectAsStateWithLifecycle()
     Scaffold(
@@ -47,7 +65,10 @@ fun ListScreen(
                 .consumedWindowInsets(innerPadding)
         ) {
             items(cookingRecords) {
-                RecipeListItem(it)
+                RecipeListItem(it) { i ->
+                    //ラムダによってここでnavigate出来ないのだろうか。index
+                    navController.navigate(i)
+                }
             }
         }
     }
@@ -100,10 +121,10 @@ fun HeaderScreen() {
     }
 }
 
-@Preview
-@Composable
-fun PreviewRecipeListScreen() {
-    MaterialTheme {
-        ListScreen()
-    }
-}
+//@Preview
+//@Composable
+//fun PreviewRecipeListScreen() {
+//    MaterialTheme {
+//        ListScreen()
+//    }
+//}

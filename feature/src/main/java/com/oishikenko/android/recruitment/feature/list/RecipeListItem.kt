@@ -1,8 +1,11 @@
 package com.oishikenko.android.recruitment.feature.list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,32 +20,41 @@ import com.oishikenko.android.recruitment.data.model.CookingRecord
 
 @Composable
 fun RecipeListItem(
-    cookingRecord: CookingRecord
+    cookingRecord: CookingRecord,
+    onClick: (String) -> Unit
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp, 10.dp, 16.dp, 0.dp)
-            .border(
-                width = 1.dp,
-                color = Color(0xFFDCE0E0),
-                shape = RoundedCornerShape(8.dp)
-            )
+    Surface(
+        modifier = Modifier.clickable { onClick("recipeDetail") },
     ) {
-        AsyncImage(
-            model = cookingRecord.imageUrl,
-            contentDescription = cookingRecord.comment,
-            contentScale = ContentScale.Crop,
+        Row(
             modifier = Modifier
-                .size(96.dp)
-                .clip(RoundedCornerShape(8, 0, 0, 8)),
-        )
-        Column(
-            modifier = Modifier,
-            verticalArrangement = Arrangement.Center
+                .fillMaxSize()
+                .padding(16.dp, 10.dp, 16.dp, 0.dp)
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFFDCE0E0),
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .background(Color(0xFFDCE0E0))
         ) {
-            Text(text = translateRecipeType(cookingRecord.recipeType), fontWeight = FontWeight.Bold)
-            Text(text = generateDateString(cookingRecord.recordedAt))
+            AsyncImage(
+                model = cookingRecord.imageUrl,
+                contentDescription = cookingRecord.comment,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(96.dp)
+                    .clip(RoundedCornerShape(8, 0, 0, 8)),
+            )
+            Column(
+                modifier = Modifier,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = translateRecipeType(cookingRecord.recipeType),
+                    fontWeight = FontWeight.Bold
+                )
+                Text(text = generateDateString(cookingRecord.recordedAt))
+            }
         }
     }
 }
@@ -72,6 +84,6 @@ fun PreviewRecipeListItem() {
             comment = "豚肉のコクとごぼうの香り、野菜の甘みで奥行きのある味わい。",
             recipeType = "soup",
             recordedAt = "2018-05-01 17:57:31"
-        )
-    )
+        ),
+    ) {}
 }
